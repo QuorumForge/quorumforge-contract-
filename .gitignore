@@ -1,0 +1,27 @@
+# Build artifacts
+target/
+*.wasm
+*.optimized.wasm
+
+# Cargo lock (keep for binaries, optional for libs — uncomment to ignore)
+# Cargo.lock
+
+# IDE / editor
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+.DS_Store
+
+# Environment / secrets
+.env
+*.env.*
+credentials.json
+
+# Stellar CLI artifacts
+.stellar/
+identity/
+
+# Misc
+*.log

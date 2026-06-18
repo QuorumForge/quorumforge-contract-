@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -D warnings
+
+jobs:
+  check:
+    name: fmt + clippy + test + wasm-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable + wasm32 target
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+          components: rustfmt, clippy
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+
+      - name: fmt
+        run: cargo fmt --check
+
+      - name: clippy (wasm32)
+        run: cargo clippy --target wasm32-unknown-unknown -- -D warnings
+
+      - name: test
+        run: cargo test
+
+      - name: build wasm
+        run: cargo build --target wasm32-unknown-unknown --release
+
+      - name: Install stellar-cli
+        run: |
+          cargo install --locked stellar-cli --features opt
+
+      - name: optimize wasm
+        run: |
+          stellar contract optimize \
+            --wasm target/wasm32-unknown-unknown/release/quorumforge_contract.wasm \
+            --wasm-out target/quorumforge_contract.optimized.wasm
+
+      - name: Upload optimized wasm
+        uses: actions/upload-artifact@v4
+        with:
+          name: quorumforge-contract-wasm
+          path: target/quorumforge_contract.optimized.wasm
+          retention-days: 30
