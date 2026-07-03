@@ -77,6 +77,8 @@ impl QuorumForge {
 
         let ts = now(&env);
         let ttl = ttl_seconds.unwrap_or(SEVEN_DAYS_SECS);
+        assert!(ttl >= MIN_TTL_SECS, "ttl too short");
+        assert!(ttl <= MAX_TTL_SECS, "ttl too long");
         let expires_at = ts + ttl;
         let proposal_id = increment_count(&env);
 
