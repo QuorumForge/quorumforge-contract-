@@ -235,6 +235,17 @@ impl QuorumForge {
         is_member(&board.members, &addr)
     }
 
+    /// Returns `true` if `addr` has already signed the given proposal.
+    pub fn has_signed(env: Env, proposal_id: u64, addr: Address) -> bool {
+        let proposal = get_proposal(&env, proposal_id);
+        proposal.signatures.contains(&addr)
+    }
+
+    /// Returns the total number of current board members.
+    pub fn get_member_count(env: Env) -> u32 {
+        get_board(&env).members.len()
+    }
+
     pub fn get_stats(env: Env) -> Stats {
         let total = get_count(&env);
         let mut executed = 0u64;
