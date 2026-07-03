@@ -224,6 +224,15 @@ impl QuorumForge {
         results
     }
 
+    pub fn get_proposal_count(env: Env) -> u64 {
+        get_count(&env)
+    }
+
+    pub fn is_member(env: Env, addr: Address) -> bool {
+        let board = get_board(&env);
+        is_member(&board.members, &addr)
+    }
+
     pub fn get_stats(env: Env) -> Stats {
         let total = get_count(&env);
         let mut executed = 0u64;
