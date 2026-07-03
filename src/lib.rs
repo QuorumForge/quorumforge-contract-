@@ -18,6 +18,8 @@ use crate::{
 };
 
 const SEVEN_DAYS_SECS: u64 = 7 * 24 * 60 * 60;
+const MIN_TTL_SECS: u64 = 60 * 60; // 1 hour minimum
+const MAX_TTL_SECS: u64 = 30 * 24 * 60 * 60; // 30 days maximum
 
 fn is_member(members: &Vec<Address>, addr: &Address) -> bool {
     members.contains(addr)
