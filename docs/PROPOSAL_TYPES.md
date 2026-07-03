@@ -2,6 +2,8 @@
 
 This document describes every `ProposalPayload` variant, its fields, execution semantics, and recommended use cases.
 
+All proposals share a common `description: String` field (set at creation time) which provides a human-readable summary of intent. This is stored on-chain alongside the typed payload and is surfaced in UIs and indexers.
+
 ---
 
 ## ResolveIssue
