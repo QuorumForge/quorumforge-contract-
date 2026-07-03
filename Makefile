@@ -8,7 +8,8 @@ OPTIMIZED_WASM = target/quorumforge_contract.optimized.wasm
 
 .PHONY: build test fmt lint clean optimize deploy-testnet deploy-mainnet \
         invoke-initialize invoke-create-proposal invoke-sign \
-        invoke-get-proposal invoke-get-board
+        invoke-get-proposal invoke-get-board invoke-get-stats \
+        invoke-get-pending invoke-is-member invoke-has-signed
 
 # ── Build ─────────────────────────────────────────────────────────────────────
 
@@ -97,3 +98,34 @@ invoke-get-board:
 		--id $(CONTRACT_ID) \
 		--network $(NETWORK) \
 		-- get_board
+
+# Usage: make invoke-get-stats CONTRACT_ID=C...
+invoke-get-stats:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--network $(NETWORK) \
+		-- get_stats
+
+# Usage: make invoke-get-pending CONTRACT_ID=C...
+invoke-get-pending:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--network $(NETWORK) \
+		-- get_pending_proposals
+
+# Usage: make invoke-is-member CONTRACT_ID=C... ADDR=G...
+invoke-is-member:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--network $(NETWORK) \
+		-- is_member \
+		--addr $(ADDR)
+
+# Usage: make invoke-has-signed CONTRACT_ID=C... PROPOSAL_ID=1 ADDR=G...
+invoke-has-signed:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--network $(NETWORK) \
+		-- has_signed \
+		--proposal_id $(PROPOSAL_ID) \
+		--addr $(ADDR)
