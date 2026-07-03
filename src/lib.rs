@@ -246,6 +246,11 @@ impl QuorumForge {
         get_board(&env).members.len()
     }
 
+    /// Convenience shortcut — returns all proposals with `Pending` status.
+    pub fn get_pending_proposals(env: Env) -> Vec<Proposal> {
+        Self::get_proposals_by_status(env, ProposalStatus::Pending)
+    }
+
     pub fn get_stats(env: Env) -> Stats {
         let total = get_count(&env);
         let mut executed = 0u64;
