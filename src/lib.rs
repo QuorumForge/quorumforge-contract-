@@ -190,6 +190,8 @@ impl QuorumForge {
         from.require_auth();
         let client = token::Client::new(&env, &asset);
         client.transfer(&from, &env.current_contract_address(), &amount);
+        let ts = now(&env);
+        events::deposit_received(&env, &from, amount, &asset, ts);
     }
 
     // ── Queries ───────────────────────────────────────────────────────────────

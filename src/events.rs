@@ -78,3 +78,10 @@ pub fn board_updated(env: &Env, members_count: u32, threshold: u32, timestamp: u
         (members_count, threshold, timestamp),
     );
 }
+
+pub fn deposit_received(env: &Env, from: &Address, amount: i128, asset: &Address, timestamp: u64) {
+    env.events().publish(
+        (symbol_short!("treasury"), symbol_short!("deposit")),
+        (from.clone(), amount, asset.clone(), timestamp),
+    );
+}
