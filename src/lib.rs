@@ -68,6 +68,7 @@ impl QuorumForge {
         proposer: Address,
         proposal_type: ProposalType,
         payload: ProposalPayload,
+        description: String,
         ttl_seconds: Option<u64>,
     ) -> u64 {
         proposer.require_auth();
@@ -87,6 +88,7 @@ impl QuorumForge {
             proposer: proposer.clone(),
             proposal_type: proposal_type.clone(),
             payload,
+            description,
             signatures: Vec::new(&env),
             status: ProposalStatus::Pending,
             created_at: ts,

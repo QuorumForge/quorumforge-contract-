@@ -102,6 +102,8 @@ pub struct Proposal {
     pub created_at: u64,
     pub expires_at: u64,
     pub executed_at: Option<u64>,
+    /// Human-readable description of the proposal's intent (max 256 chars).
+    pub description: String,
 }
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
