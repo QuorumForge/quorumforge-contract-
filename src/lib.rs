@@ -202,6 +202,11 @@ impl QuorumForge {
         get_board(&env)
     }
 
+    /// Returns the admin address that was set during initialization.
+    pub fn get_admin(env: Env) -> Address {
+        get_admin(&env)
+    }
+
     pub fn get_proposals_by_status(env: Env, status: ProposalStatus) -> Vec<Proposal> {
         let count = get_count(&env);
         let mut results = Vec::new(&env);
