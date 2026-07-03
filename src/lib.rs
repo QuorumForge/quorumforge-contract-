@@ -299,7 +299,10 @@ impl QuorumForge {
                 let mut board = get_board(env);
                 if !is_member(&board.members, &p.new_member) {
                     board.members.push_back(p.new_member);
+                    let count = board.members.len();
+                    let threshold = board.threshold;
                     set_board(env, &board);
+                    events::board_updated(env, count, threshold, ts);
                 }
             }
             ProposalPayload::RemoveMember(p) => {
@@ -311,7 +314,10 @@ impl QuorumForge {
                     }
                 }
                 board.members = new_members;
+                let count = board.members.len();
+                let threshold = board.threshold;
                 set_board(env, &board);
+                events::board_updated(env, count, threshold, ts);
             }
             ProposalPayload::UpdateThreshold(p) => {
                 let mut board = get_board(env);
@@ -320,7 +326,9 @@ impl QuorumForge {
                     "invalid threshold"
                 );
                 board.threshold = p.new_threshold;
+                let count = board.members.len();
                 set_board(env, &board);
+                events::board_updated(env, count, p.new_threshold, ts);
             }
         }
 

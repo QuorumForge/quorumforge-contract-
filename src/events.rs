@@ -71,3 +71,10 @@ pub fn proposal_expired(env: &Env, proposal_id: u64, timestamp: u64) {
         (proposal_id, timestamp),
     );
 }
+
+pub fn board_updated(env: &Env, members_count: u32, threshold: u32, timestamp: u64) {
+    env.events().publish(
+        (symbol_short!("board"), symbol_short!("updated")),
+        (members_count, threshold, timestamp),
+    );
+}
