@@ -126,4 +126,6 @@ pub struct Stats {
     pub pending: u64,
     pub cancelled: u64,
     pub expired: u64,
+    /// Total number of individual signatures cast across all proposals.
+    pub total_signatures: u64,
 }
