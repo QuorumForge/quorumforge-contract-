@@ -96,6 +96,15 @@ pub struct UpdateThresholdPayload {
     pub new_threshold: u32,
 }
 
+/// Payload for a generic treasury withdrawal to an external address.
+#[contracttype]
+#[derive(Clone, Debug, PartialEq)]
+pub struct WithdrawalPayload {
+    pub recipient: Address,
+    pub amount: i128,
+    pub asset: Address,
+}
+
 // ── Proposal ─────────────────────────────────────────────────────────────────
 
 #[contracttype]
