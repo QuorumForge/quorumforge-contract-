@@ -53,3 +53,8 @@ pub fn increment_count(env: &Env) -> u64 {
     env.storage().instance().set(&DataKey::Count, &next);
     next
 }
+
+/// Returns `true` if the board has been initialized and an admin is set.
+pub fn has_admin(env: &Env) -> bool {
+    env.storage().instance().has(&DataKey::Admin)
+}
