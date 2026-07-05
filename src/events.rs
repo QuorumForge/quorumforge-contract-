@@ -85,3 +85,10 @@ pub fn deposit_received(env: &Env, from: &Address, amount: i128, asset: &Address
         (from.clone(), amount, asset.clone(), timestamp),
     );
 }
+
+pub fn threshold_updated(env: &Env, old_threshold: u32, new_threshold: u32, timestamp: u64) {
+    env.events().publish(
+        (symbol_short!("board"), symbol_short!("thresh")),
+        (old_threshold, new_threshold, timestamp),
+    );
+}
