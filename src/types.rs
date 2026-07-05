@@ -1,5 +1,13 @@
 use soroban_sdk::{contracttype, Address, String, Vec};
 
+// ── Constants ────────────────────────────────────────────────────────────────
+
+/// Maximum number of members allowed on a board.
+pub const MAX_MEMBERS: u32 = 20;
+
+/// Minimum TTL for a proposal in seconds (1 hour).
+pub const MIN_TTL_SECS: u64 = 3_600;
+
 // ── Storage Keys ────────────────────────────────────────────────────────────
 
 #[contracttype]
