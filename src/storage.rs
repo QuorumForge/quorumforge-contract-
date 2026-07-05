@@ -22,6 +22,12 @@ pub fn set_admin(env: &Env, admin: &Address) {
     env.storage().instance().set(&DataKey::Admin, admin);
 }
 
+pub fn has_proposal(env: &Env, id: u64) -> bool {
+    env.storage()
+        .persistent()
+        .has(&DataKey::Proposal(id))
+}
+
 pub fn get_proposal(env: &Env, id: u64) -> Proposal {
     env.storage()
         .persistent()
