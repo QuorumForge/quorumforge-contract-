@@ -92,3 +92,17 @@ pub fn threshold_updated(env: &Env, old_threshold: u32, new_threshold: u32, time
         (old_threshold, new_threshold, timestamp),
     );
 }
+
+pub fn member_added(env: &Env, new_member: &Address, members_count: u32, timestamp: u64) {
+    env.events().publish(
+        (symbol_short!("board"), symbol_short!("addmem")),
+        (new_member.clone(), members_count, timestamp),
+    );
+}
+
+pub fn member_removed(env: &Env, removed: &Address, members_count: u32, timestamp: u64) {
+    env.events().publish(
+        (symbol_short!("board"), symbol_short!("rmmem")),
+        (removed.clone(), members_count, timestamp),
+    );
+}
