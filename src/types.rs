@@ -8,6 +8,9 @@ pub const MAX_MEMBERS: u32 = 20;
 /// Minimum TTL for a proposal in seconds (1 hour).
 pub const MIN_TTL_SECS: u64 = 3_600;
 
+/// Maximum allowed length for a proposal description string.
+pub const MAX_DESCRIPTION_LEN: u32 = 256;
+
 // ── Storage Keys ────────────────────────────────────────────────────────────
 
 #[contracttype]
