@@ -428,3 +428,36 @@ fn test_cancelled_at_is_set() {
     assert_eq!(p.status, ProposalStatus::Cancelled);
     assert!(p.cancelled_at.is_some());
 }
+
+/// get_proposals_by_member returns proposals created or signed by member
+#[test]
+fn test_get_proposals_by_member() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    // alice creates proposal 1
+    let id1 = client.create_proposal(
+        &s.alice,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &None,
+    );
+    // bob creates proposal 2
+    let id2 = client.create_proposal(
+        &s.bob,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &None,
+    );
+    // alice signs proposal 2
+    client.sign_proposal(&s.alice, &id2);
+
+    let alice_proposals = client.get_proposals_by_member(&s.alice);
+    // alice is proposer of id1 and signer of id2
+    assert_eq!(alice_proposals.len(), 2);
+
+    let bob_proposals = client.get_proposals_by_member(&s.bob);
+    // bob is proposer of id2 only
+    assert_eq!(bob_proposals.len(), 1);
+    assert_eq!(bob_proposals.first_unchecked().proposal_id, id2);
+}
