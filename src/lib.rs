@@ -40,6 +40,10 @@ impl QuorumForge {
         assert!(!has_board(&env), "already initialized");
         assert!(!members.is_empty(), "members cannot be empty");
         assert!(
+            (members.len() as u32) <= crate::types::MAX_MEMBERS,
+            "too many members"
+        );
+        assert!(
             threshold as usize <= members.len() as usize && threshold > 0,
             "invalid threshold"
         );
