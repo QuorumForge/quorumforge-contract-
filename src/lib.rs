@@ -264,8 +264,10 @@ impl QuorumForge {
         let mut pending = 0u64;
         let mut cancelled = 0u64;
         let mut expired = 0u64;
+        let mut total_signatures = 0u64;
         for id in 1..=total {
             let p = get_proposal(&env, id);
+            total_signatures += p.signatures.len() as u64;
             match p.status {
                 ProposalStatus::Executed => executed += 1,
                 ProposalStatus::Pending => pending += 1,
@@ -279,6 +281,7 @@ impl QuorumForge {
             pending,
             cancelled,
             expired,
+            total_signatures,
         }
     }
 
