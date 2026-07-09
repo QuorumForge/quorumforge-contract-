@@ -304,10 +304,11 @@ impl QuorumForge {
             ProposalPayload::AddMember(p) => {
                 let mut board = get_board(env);
                 if !is_member(&board.members, &p.new_member) {
-                    board.members.push_back(p.new_member);
+                    board.members.push_back(p.new_member.clone());
                     let count = board.members.len();
                     let threshold = board.threshold;
                     set_board(env, &board);
+                    events::member_added(env, &p.new_member, count, ts);
                     events::board_updated(env, count, threshold, ts);
                 }
             }
@@ -323,6 +324,7 @@ impl QuorumForge {
                 let count = board.members.len();
                 let threshold = board.threshold;
                 set_board(env, &board);
+                events::member_removed(env, &p.member, count, ts);
                 events::board_updated(env, count, threshold, ts);
             }
             ProposalPayload::UpdateThreshold(p) => {
