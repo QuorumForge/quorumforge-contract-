@@ -315,14 +315,20 @@ impl QuorumForge {
             }
             ProposalPayload::AddMember(p) => {
                 let mut board = get_board(env);
-                if !is_member(&board.members, &p.new_member) {
-                    board.members.push_back(p.new_member.clone());
-                    let count = board.members.len();
-                    let threshold = board.threshold;
-                    set_board(env, &board);
-                    events::member_added(env, &p.new_member, count, ts);
-                    events::board_updated(env, count, threshold, ts);
-                }
+                assert!(
+                    !is_member(&board.members, &p.new_member),
+                    "member already exists"
+                );
+                assert!(
+                    (board.members.len() as u32) < crate::types::MAX_MEMBERS,
+                    "board is at maximum capacity"
+                );
+                board.members.push_back(p.new_member.clone());
+                let count = board.members.len();
+                let threshold = board.threshold;
+                set_board(env, &board);
+                events::member_added(env, &p.new_member, count, ts);
+                events::board_updated(env, count, threshold, ts);
             }
             ProposalPayload::RemoveMember(p) => {
                 let mut board = get_board(env);
