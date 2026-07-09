@@ -80,6 +80,13 @@ impl QuorumForge {
         let ttl = ttl_seconds.unwrap_or(SEVEN_DAYS_SECS);
         assert!(ttl >= MIN_TTL_SECS, "ttl too short");
         assert!(ttl <= MAX_TTL_SECS, "ttl too long");
+
+        // Enforce description length limit
+        assert!(
+            description.len() <= crate::types::MAX_DESCRIPTION_LEN,
+            "description too long"
+        );
+
         let expires_at = ts + ttl;
         let proposal_id = increment_count(&env);
 
