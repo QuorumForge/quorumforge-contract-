@@ -300,6 +300,7 @@ impl QuorumForge {
             ProposalPayload::TransferFunds(p) => {
                 let client = token::Client::new(env, &p.asset);
                 client.transfer(&env.current_contract_address(), &p.recipient, &p.amount);
+                events::withdrawal_requested(env, proposal_id, &p.recipient, p.amount, ts);
             }
             ProposalPayload::AddMember(p) => {
                 let mut board = get_board(env);
