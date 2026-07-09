@@ -2,7 +2,9 @@
 
 This document describes every `ProposalPayload` variant, its fields, execution semantics, and recommended use cases.
 
-All proposals share a common `description: String` field (set at creation time) which provides a human-readable summary of intent. This is stored on-chain alongside the typed payload and is surfaced in UIs and indexers.
+All proposals share a common `description: String` field (set at creation time, max 256 characters) which provides a human-readable summary of intent. This is stored on-chain alongside the typed payload and is surfaced in UIs and indexers.
+
+> **TTL:** Each proposal has a configurable TTL (`ttl_seconds`), defaulting to 7 days. Minimum is 1 hour, maximum is 30 days. After the TTL elapses, anyone can call `expire_proposal` to mark it as `Expired`.
 
 ---
 
@@ -76,7 +78,7 @@ Add a new address to the board.
 |---|---|---|
 | `new_member` | `Address` | Address to add to board |
 
-**Execution:** Appends `new_member` to `board.members`. Idempotent — adding an existing member is a no-op.
+**Execution:** Appends `new_member` to `board.members`. Panics if `new_member` is already on the board or if the board is at `MAX_MEMBERS` (20) capacity.
 
 After execution, the new member can immediately create and sign proposals.
 
