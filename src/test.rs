@@ -343,3 +343,71 @@ fn test_transfer_funds() {
     let balance = TokenClient::new(&s.env, &s.asset).balance(&recipient);
     assert_eq!(balance, 500);
 }
+
+/// has_signed returns correct result before and after signing
+#[test]
+fn test_has_signed() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &None,
+    );
+
+    assert!(!client.has_signed(&id, &s.alice));
+    client.sign_proposal(&s.alice, &id);
+    assert!(client.has_signed(&id, &s.alice));
+    assert!(!client.has_signed(&id, &s.bob));
+}
+
+/// get_pending_proposals returns only pending proposals
+#[test]
+fn test_get_pending_proposals() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    let id1 = client.create_proposal(
+        &s.alice,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &None,
+    );
+    let _id2 = client.create_proposal(
+        &s.bob,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &None,
+    );
+
+    // execute id1
+    client.sign_proposal(&s.alice, &id1);
+    client.sign_proposal(&s.bob, &id1);
+
+    let pending = client.get_pending_proposals();
+    assert_eq!(pending.len(), 1);
+}
+
+/// get_stats returns correct aggregated counts
+#[test]
+fn test_get_stats() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    let id1 = client.create_proposal(
+        &s.alice,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &None,
+    );
+    // execute id1 with 2 signatures
+    client.sign_proposal(&s.alice, &id1);
+    client.sign_proposal(&s.bob, &id1);
+
+    let stats = client.get_stats();
+    assert_eq!(stats.total_proposals, 1);
+    assert_eq!(stats.executed, 1);
+    assert_eq!(stats.pending, 0);
+    assert_eq!(stats.total_signatures, 2);
+}
