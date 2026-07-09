@@ -411,3 +411,20 @@ fn test_get_stats() {
     assert_eq!(stats.pending, 0);
     assert_eq!(stats.total_signatures, 2);
 }
+
+/// cancelled_at is populated when a proposal is cancelled
+#[test]
+fn test_cancelled_at_is_set() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &None,
+    );
+    client.cancel_proposal(&id, &s.alice);
+    let p = client.get_proposal(&id);
+    assert_eq!(p.status, ProposalStatus::Cancelled);
+    assert!(p.cancelled_at.is_some());
+}
