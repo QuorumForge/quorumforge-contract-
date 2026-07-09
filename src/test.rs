@@ -431,8 +431,7 @@ fn test_cancelled_at_is_set() {
 
 /// get_proposals_by_member returns proposals created or signed by member
 #[test]
-fn test_get_proposals_by_member() {
-    let s = setup_board();
+fn test_get_proposals_by_member() {    let s = setup_board();
     let client = QuorumForgeClient::new(&s.env, &s.contract);
 
     // alice creates proposal 1
@@ -460,4 +459,47 @@ fn test_get_proposals_by_member() {
     // bob is proposer of id2 only
     assert_eq!(bob_proposals.len(), 1);
     assert_eq!(bob_proposals.first_unchecked().proposal_id, id2);
+}
+
+/// Admin can cancel any proposal, not just their own
+#[test]
+fn test_admin_can_cancel_any_proposal() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    // alice creates a proposal
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &None,
+    );
+
+    // admin (not alice) cancels it
+    client.cancel_proposal(&id, &s.admin);
+
+    let p = client.get_proposal(&id);
+    assert_eq!(p.status, ProposalStatus::Cancelled);
+    assert!(p.cancelled_at.is_some());
+}
+
+/// deposit increases treasury balance
+#[test]
+fn test_deposit() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    let depositor = Address::generate(&s.env);
+    let asset_client = StellarAssetClient::new(&s.env, &s.asset);
+    asset_client.mint(&depositor, &1_000);
+
+    let balance_before = soroban_sdk::token::Client::new(&s.env, &s.asset)
+        .balance(&s.contract);
+
+    client.deposit(&depositor, &500, &s.asset);
+
+    let balance_after = soroban_sdk::token::Client::new(&s.env, &s.asset)
+        .balance(&s.contract);
+
+    assert_eq!(balance_after - balance_before, 500);
 }
