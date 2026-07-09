@@ -58,3 +58,18 @@ pub fn increment_count(env: &Env) -> u64 {
 pub fn has_admin(env: &Env) -> bool {
     env.storage().instance().has(&DataKey::Admin)
 }
+
+/// Extends the TTL of a proposal's persistent storage entry.
+/// Call this after reading a proposal to prevent it from being evicted.
+pub fn extend_proposal_ttl(env: &Env, id: u64, ledgers_to_extend: u32) {
+    env.storage()
+        .persistent()
+        .extend_ttl(&DataKey::Proposal(id), ledgers_to_extend, ledgers_to_extend);
+}
+
+/// Extends the TTL of the instance storage (board config, admin, count).
+pub fn extend_instance_ttl(env: &Env, ledgers_to_extend: u32) {
+    env.storage()
+        .instance()
+        .extend_ttl(ledgers_to_extend, ledgers_to_extend);
+}
