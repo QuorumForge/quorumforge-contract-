@@ -160,10 +160,11 @@ impl QuorumForge {
             "proposal not pending"
         );
 
+        let ts = now(&env);
         proposal.status = ProposalStatus::Cancelled;
+        proposal.cancelled_at = Some(ts);
         set_proposal(&env, &proposal);
 
-        let ts = now(&env);
         events::proposal_cancelled(&env, proposal_id, &canceller, ts);
     }
 
