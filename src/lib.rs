@@ -334,9 +334,11 @@ impl QuorumForge {
                     p.new_threshold as usize <= board.members.len() as usize && p.new_threshold > 0,
                     "invalid threshold"
                 );
+                let old_threshold = board.threshold;
                 board.threshold = p.new_threshold;
                 let count = board.members.len();
                 set_board(env, &board);
+                events::threshold_updated(env, old_threshold, p.new_threshold, ts);
                 events::board_updated(env, count, p.new_threshold, ts);
             }
         }
