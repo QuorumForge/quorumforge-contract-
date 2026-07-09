@@ -217,11 +217,17 @@ All events are published under a two-symbol topic `(namespace, action)`:
 | Topic | Data fields |
 |---|---|
 | `("board", "init")` | `(members, threshold, timestamp)` |
+| `("board", "updated")` | `(members_count, threshold, timestamp)` |
+| `("board", "addmem")` | `(new_member, members_count, timestamp)` |
+| `("board", "rmmem")` | `(removed, members_count, timestamp)` |
+| `("board", "thresh")` | `(old_threshold, new_threshold, timestamp)` |
 | `("proposal", "created")` | `(id, proposer, type, expires_at)` |
 | `("proposal", "signed")` | `(id, signer, sig_count, threshold)` |
 | `("proposal", "executed")` | `(id, type, executor, timestamp)` |
 | `("proposal", "cancelled")` | `(id, canceller, timestamp)` |
 | `("proposal", "expired")` | `(id, timestamp)` |
+| `("treasury", "deposit")` | `(from, amount, asset, timestamp)` |
+| `("treasury", "withdraw")` | `(proposal_id, recipient, amount, timestamp)` |
 
 Events are indexed by the Stellar Horizon API and can be subscribed to via streaming.
 
