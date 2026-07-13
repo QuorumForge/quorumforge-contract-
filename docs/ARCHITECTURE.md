@@ -282,3 +282,26 @@ This contract does not implement an upgrade mechanism in v0.1. To upgrade:
 3. Update client integrations to point to the new contract ID.
 
 A governance-controlled upgrade mechanism (e.g., using `UpdateThreshold` pattern for contract migration) is planned for a future version.
+
+---
+
+## Query Entrypoints
+
+All read-only entry points are free (no fees) and can be called by anyone.
+
+| Function | Returns | Description |
+|---|---|---|
+| `get_proposal(id)` | `Proposal` | Full proposal by ID |
+| `get_board()` | `BoardConfig` | Current members and threshold |
+| `get_admin()` | `Address` | Admin address set at initialization |
+| `get_proposal_count()` | `u64` | Total proposals ever created |
+| `get_member_count()` | `u32` | Current board size |
+| `get_threshold()` | `u32` | Current signing threshold |
+| `is_initialized()` | `bool` | True if board + admin are set |
+| `has_proposal(id)` | `bool` | True if proposal ID exists |
+| `is_member(addr)` | `bool` | True if address is on board |
+| `has_signed(id, addr)` | `bool` | True if addr signed proposal |
+| `get_pending_proposals()` | `Vec<Proposal>` | All pending proposals |
+| `get_proposals_by_status(status)` | `Vec<Proposal>` | Filtered by status |
+| `get_proposals_by_member(addr)` | `Vec<Proposal>` | Created or signed by addr |
+| `get_stats()` | `Stats` | Aggregated proposal counts |

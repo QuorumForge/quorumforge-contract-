@@ -85,6 +85,19 @@ Emitted each time a member signs a proposal.
 
 ---
 
+### `("proposal", "quorum")`
+
+Emitted immediately after the final signature brings a proposal to threshold, **before** `_execute` runs. Useful for indexers that want to react the moment quorum is reached rather than waiting for the `executed` event.
+
+| Field | Type | Description |
+|---|---|---|
+| `proposal_id` | `u64` | Proposal that crossed threshold |
+| `sig_count` | `u32` | Number of signatures at quorum |
+| `threshold` | `u32` | Required count that was met |
+| `timestamp` | `u64` | Unix ledger timestamp |
+
+---
+
 ### `("proposal", "executed")`
 
 Emitted when a proposal reaches quorum and its action is executed.
@@ -117,6 +130,44 @@ Emitted when `expire_proposal` is called on a proposal past its TTL.
 | Field | Type | Description |
 |---|---|---|
 | `proposal_id` | `u64` | Expired proposal |
+| `timestamp` | `u64` | Unix ledger timestamp |
+
+---
+
+## Board Member Events
+
+### `("board", "addmem")`
+
+Emitted when an `AddMember` proposal executes successfully.
+
+| Field | Type | Description |
+|---|---|---|
+| `new_member` | `Address` | Address added to the board |
+| `members_count` | `u32` | New total member count |
+| `timestamp` | `u64` | Unix ledger timestamp |
+
+---
+
+### `("board", "rmmem")`
+
+Emitted when a `RemoveMember` proposal executes successfully.
+
+| Field | Type | Description |
+|---|---|---|
+| `removed` | `Address` | Address removed from the board |
+| `members_count` | `u32` | New total member count |
+| `timestamp` | `u64` | Unix ledger timestamp |
+
+---
+
+### `("board", "thresh")`
+
+Emitted when an `UpdateThreshold` proposal executes successfully.
+
+| Field | Type | Description |
+|---|---|---|
+| `old_threshold` | `u32` | Previous threshold value |
+| `new_threshold` | `u32` | Updated threshold value |
 | `timestamp` | `u64` | Unix ledger timestamp |
 
 ---

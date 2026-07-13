@@ -4,7 +4,7 @@ This document describes every `ProposalPayload` variant, its fields, execution s
 
 All proposals share a common `description: String` field (set at creation time, max 256 characters) which provides a human-readable summary of intent. This is stored on-chain alongside the typed payload and is surfaced in UIs and indexers.
 
-> **TTL:** Each proposal has a configurable TTL (`ttl_seconds`), defaulting to 7 days. Minimum is 1 hour, maximum is 30 days. After the TTL elapses, anyone can call `expire_proposal` to mark it as `Expired`.
+> **TTL:** Each proposal has a configurable TTL (`ttl_seconds`), defaulting to `DEFAULT_TTL_SECS` (7 days). Minimum is `MIN_TTL_SECS` (1 hour), maximum is `MAX_TTL_SECS` (30 days). After the TTL elapses, anyone can call `expire_proposal` to mark it as `Expired`. These constants are defined in `types.rs`.
 
 ---
 
