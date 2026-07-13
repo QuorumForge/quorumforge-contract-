@@ -8,19 +8,31 @@ Follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and [Semantic V
 ## [Unreleased]
 
 ### Added
-- `description: String` field on `Proposal` — a human-readable summary stored on-chain alongside the typed payload.
-- `create_proposal` now accepts a `description` parameter.
-- `has_signed(proposal_id, addr)` — query whether a specific address has already signed a proposal.
-- `get_member_count()` — returns the current number of board members without fetching the full `BoardConfig`.
-- `get_pending_proposals()` — convenience shortcut equivalent to `get_proposals_by_status(Pending)`.
-- `get_admin()` — public query to retrieve the admin address set at initialization.
-- `get_proposal_count()` — returns the total number of proposals ever created.
-- `is_member(addr)` — public query to check membership without fetching the full board.
-- `board_updated` event — emitted on `AddMember`, `RemoveMember`, and `UpdateThreshold` executions with the new member count and threshold.
-- `MIN_TTL_SECS` (1 hour) and `MAX_TTL_SECS` (30 days) constants. TTL is now validated on proposal creation.
+- `description: String` field on `Proposal`.
+- `has_signed(proposal_id, addr)` — query whether an address has signed.
+- `get_member_count()` — board size without fetching full config.
+- `get_pending_proposals()` — shortcut for `get_proposals_by_status(Pending)`.
+- `get_admin()` — public admin address query.
+- `get_proposal_count()` — total proposals ever created.
+- `is_member(addr)` — public membership check.
+- `board_updated` event on membership/threshold changes.
+- `member_added` and `member_removed` granular events.
+- `threshold_updated` event with old and new values.
+- `withdrawal_requested` event on `TransferFunds` execution.
+- `MIN_TTL_SECS` / `MAX_TTL_SECS` constants enforced on proposal creation.
+- `MAX_DESCRIPTION_LEN` (256 chars) enforced on `create_proposal`.
+- `MAX_MEMBERS` (20) cap enforced on `initialize` and `AddMember`.
+- `cancelled_at: Option<u64>` field populated on proposal cancellation.
+- `total_signatures: u64` included in `Stats`.
+- `extend_proposal_ttl` and `extend_instance_ttl` storage helpers.
+
+### Fixed
+- `AddMember` execution now rejects duplicate members and enforces board capacity.
+- `UpdateThreshold` emits both `threshold_updated` and `board_updated` events.
 
 ### Changed
-- `create_proposal` signature now includes `description: String` before `ttl_seconds`.
+- `create_proposal` signature includes `description: String` before `ttl_seconds`.
+- `cancel_proposal` now sets `cancelled_at` timestamp on the proposal.
 
 ---
 
