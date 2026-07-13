@@ -115,6 +115,7 @@ test(expire): add ledger timestamp advancement test
 cargo test                    # all tests
 cargo test test_happy_path    # single test
 cargo test -- --nocapture     # with stdout
+cargo test -- --test-threads=1  # sequential (useful for snapshot tests)
 ```
 
 ---

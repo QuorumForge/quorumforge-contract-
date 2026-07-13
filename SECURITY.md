@@ -60,3 +60,17 @@ Out of scope:
 ## Bug Bounty
 
 There is currently no formal bug bounty program. Exceptionally impactful reports may be rewarded at the maintainers' discretion.
+
+---
+
+## Security Properties
+
+The following properties are maintained by the contract at all times:
+
+1. **Threshold invariant** — `1 ≤ threshold ≤ members.len()` is enforced on init, `UpdateThreshold`, and `AddMember`/`RemoveMember` execution.
+2. **No double-sign** — A member's address can appear in `signatures` at most once per proposal.
+3. **Terminal status** — A proposal that is `Executed`, `Cancelled`, or `Expired` cannot be modified or re-executed.
+4. **Auth required** — Every state-mutating function calls `Address::require_auth()` for the acting party.
+5. **No re-entrancy** — Soroban's execution model prevents re-entrant calls to the same contract.
+6. **Board capacity** — A board cannot exceed `MAX_MEMBERS` (20) members.
+7. **Description length** — On-chain descriptions are capped at `MAX_DESCRIPTION_LEN` (256 chars).
