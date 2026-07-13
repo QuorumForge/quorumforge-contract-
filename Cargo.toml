@@ -1,11 +1,13 @@
 [package]
 name = "quorumforge-contract"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["QuorumForge Contributors"]
 description = "Trustless N-of-M multi-sig governance contract for open source maintainer boards"
 license = "MIT"
 repository = "https://github.com/your-org/quorumforge-contract"
+keywords = ["soroban", "stellar", "multisig", "governance", "dao"]
+categories = ["cryptography::cryptocurrencies"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

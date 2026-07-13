@@ -9,7 +9,9 @@ OPTIMIZED_WASM = target/quorumforge_contract.optimized.wasm
 .PHONY: build test fmt lint clean optimize deploy-testnet deploy-mainnet \
         invoke-initialize invoke-create-proposal invoke-sign \
         invoke-get-proposal invoke-get-board invoke-get-stats \
-        invoke-get-pending invoke-is-member invoke-has-signed
+        invoke-get-pending invoke-is-member invoke-has-signed \
+        invoke-is-initialized invoke-get-threshold invoke-has-proposal \
+        invoke-get-member-count invoke-cancel-proposal invoke-expire-proposal
 
 # ── Build ─────────────────────────────────────────────────────────────────────
 
@@ -129,3 +131,51 @@ invoke-has-signed:
 		-- has_signed \
 		--proposal_id $(PROPOSAL_ID) \
 		--addr $(ADDR)
+
+# Usage: make invoke-is-initialized CONTRACT_ID=C...
+invoke-is-initialized:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--network $(NETWORK) \
+		-- is_initialized
+
+# Usage: make invoke-get-threshold CONTRACT_ID=C...
+invoke-get-threshold:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--network $(NETWORK) \
+		-- get_threshold
+
+# Usage: make invoke-has-proposal CONTRACT_ID=C... PROPOSAL_ID=1
+invoke-has-proposal:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--network $(NETWORK) \
+		-- has_proposal \
+		--proposal_id $(PROPOSAL_ID)
+
+# Usage: make invoke-get-member-count CONTRACT_ID=C...
+invoke-get-member-count:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--network $(NETWORK) \
+		-- get_member_count
+
+# Usage: make invoke-cancel-proposal CONTRACT_ID=C... PROPOSAL_ID=1 CANCELLER=G...
+invoke-cancel-proposal:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--source $(SOURCE_ACCOUNT) \
+		--network $(NETWORK) \
+		-- cancel_proposal \
+		--proposal_id $(PROPOSAL_ID) \
+		--canceller $(CANCELLER)
+
+# Usage: make invoke-expire-proposal CONTRACT_ID=C... PROPOSAL_ID=1
+invoke-expire-proposal:
+	stellar contract invoke \
+		--id $(CONTRACT_ID) \
+		--source $(SOURCE_ACCOUNT) \
+		--network $(NETWORK) \
+		-- expire_proposal \
+		--proposal_id $(PROPOSAL_ID)
