@@ -85,8 +85,14 @@ Fund the contract treasury so `TransferFunds` and `ResolveIssue` proposals have 
 |---|---|
 | `get_proposal(id)` | `Proposal` |
 | `get_board()` | `BoardConfig` |
+| `get_admin()` | `Address` |
 | `get_proposals_by_status(status)` | `Vec<Proposal>` |
 | `get_proposals_by_member(member)` | `Vec<Proposal>` |
+| `get_pending_proposals()` | `Vec<Proposal>` |
+| `get_proposal_count()` | `u64` |
+| `get_member_count()` | `u32` |
+| `is_member(addr)` | `bool` |
+| `has_signed(proposal_id, addr)` | `bool` |
 | `get_stats()` | `Stats` |
 
 ---
