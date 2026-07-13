@@ -113,3 +113,12 @@ pub fn withdrawal_requested(env: &Env, proposal_id: u64, recipient: &Address, am
         (proposal_id, recipient.clone(), amount, timestamp),
     );
 }
+
+/// Emitted the moment a proposal crosses the signature threshold and
+/// auto-execution is about to begin.
+pub fn quorum_reached(env: &Env, proposal_id: u64, sig_count: u32, threshold: u32, timestamp: u64) {
+    env.events().publish(
+        (symbol_short!("proposal"), symbol_short!("quorum")),
+        (proposal_id, sig_count, threshold, timestamp),
+    );
+}

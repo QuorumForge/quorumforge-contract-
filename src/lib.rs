@@ -11,13 +11,12 @@ use soroban_sdk::{contract, contractimpl, token, Address, Env, Vec};
 
 use crate::{
     storage::{
-        get_admin, get_board, get_count, get_proposal, has_board, increment_count, set_admin,
+        self, get_admin, get_board, get_count, get_proposal, has_board, increment_count, set_admin,
         set_board, set_proposal,
     },
     types::{BoardConfig, Proposal, ProposalPayload, ProposalStatus, ProposalType, Stats},
 };
 
-const SEVEN_DAYS_SECS: u64 = 7 * 24 * 60 * 60;
 const MIN_TTL_SECS: u64 = 60 * 60; // 1 hour minimum
 const MAX_TTL_SECS: u64 = 30 * 24 * 60 * 60; // 30 days maximum
 
@@ -81,7 +80,7 @@ impl QuorumForge {
         assert!(is_member(&board.members, &proposer), "not a board member");
 
         let ts = now(&env);
-        let ttl = ttl_seconds.unwrap_or(SEVEN_DAYS_SECS);
+        let ttl = ttl_seconds.unwrap_or(crate::types::DEFAULT_TTL_SECS);
         assert!(ttl >= MIN_TTL_SECS, "ttl too short");
         assert!(ttl <= MAX_TTL_SECS, "ttl too long");
 
@@ -135,6 +134,7 @@ impl QuorumForge {
         events::proposal_signed(&env, proposal_id, &signer, sig_count, board.threshold);
 
         if sig_count >= board.threshold {
+            events::quorum_reached(&env, proposal_id, sig_count, board.threshold, now(&env));
             Self::_execute(&env, proposal_id);
         }
     }
@@ -263,6 +263,21 @@ impl QuorumForge {
     /// Returns the total number of current board members.
     pub fn get_member_count(env: Env) -> u32 {
         get_board(&env).members.len()
+    }
+
+    /// Returns `true` if the board has been initialized and an admin is set.
+    pub fn is_initialized(env: Env) -> bool {
+        storage::has_board(&env) && storage::has_admin(&env)
+    }
+
+    /// Returns the current signing threshold without fetching the full board config.
+    pub fn get_threshold(env: Env) -> u32 {
+        get_board(&env).threshold
+    }
+
+    /// Returns `true` if a proposal with the given ID exists in storage.
+    pub fn has_proposal(env: Env, proposal_id: u64) -> bool {
+        storage::has_proposal(&env, proposal_id)
     }
 
     /// Convenience shortcut — returns all proposals with `Pending` status.

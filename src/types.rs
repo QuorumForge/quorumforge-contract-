@@ -11,6 +11,12 @@ pub const MIN_TTL_SECS: u64 = 3_600;
 /// Maximum allowed length for a proposal description string.
 pub const MAX_DESCRIPTION_LEN: u32 = 256;
 
+/// Default TTL for a proposal in seconds (7 days).
+pub const DEFAULT_TTL_SECS: u64 = 7 * 24 * 60 * 60;
+
+/// Maximum TTL for a proposal in seconds (30 days).
+pub const MAX_TTL_SECS: u64 = 30 * 24 * 60 * 60;
+
 // ── Storage Keys ────────────────────────────────────────────────────────────
 
 #[contracttype]
