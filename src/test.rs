@@ -77,6 +77,10 @@ fn resolve_payload(s: &Setup) -> ProposalPayload {
     })
 }
 
+fn desc(env: &Env, s: &str) -> String {
+    String::from_str(env, s)
+}
+
 // ── Tests ─────────────────────────────────────────────────────────────────────
 
 /// 2-of-3 happy path: create → sign × 2 → auto-execute
@@ -89,6 +93,7 @@ fn test_happy_path_auto_execute() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     assert_eq!(id, 1);
@@ -116,6 +121,7 @@ fn test_double_sign_rejected() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     client.sign_proposal(&s.alice, &id);
@@ -133,6 +139,7 @@ fn test_non_member_create() {
         &outsider,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
 }
@@ -147,6 +154,7 @@ fn test_non_member_sign() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     let outsider = Address::generate(&s.env);
@@ -163,6 +171,7 @@ fn test_expired_cannot_sign() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "short ttl proposal"),
         &Some(60u64), // 60 second TTL
     );
     // advance ledger past TTL
@@ -182,6 +191,7 @@ fn test_cancelled_cannot_sign() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     client.cancel_proposal(&id, &s.alice);
@@ -198,7 +208,7 @@ fn test_add_member() {
     let payload = ProposalPayload::AddMember(AddMemberPayload {
         new_member: newcomer.clone(),
     });
-    let id = client.create_proposal(&s.alice, &ProposalType::AddMember, &payload, &None);
+    let id = client.create_proposal(&s.alice, &ProposalType::AddMember, &payload, &desc(&s.env, "test proposal"), &None);
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id);
 
@@ -216,7 +226,7 @@ fn test_remove_member() {
     let payload = ProposalPayload::RemoveMember(RemoveMemberPayload {
         member: s.carol.clone(),
     });
-    let id = client.create_proposal(&s.alice, &ProposalType::RemoveMember, &payload, &None);
+    let id = client.create_proposal(&s.alice, &ProposalType::RemoveMember, &payload, &desc(&s.env, "test proposal"), &None);
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id);
 
@@ -233,7 +243,7 @@ fn test_update_threshold_too_high() {
     let client = QuorumForgeClient::new(&s.env, &s.contract);
 
     let payload = ProposalPayload::UpdateThreshold(UpdateThresholdPayload { new_threshold: 99 });
-    let id = client.create_proposal(&s.alice, &ProposalType::UpdateThreshold, &payload, &None);
+    let id = client.create_proposal(&s.alice, &ProposalType::UpdateThreshold, &payload, &desc(&s.env, "test proposal"), &None);
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id); // executes → panics
 }
@@ -248,6 +258,7 @@ fn test_public_execute_after_threshold() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     client.sign_proposal(&s.alice, &id);
@@ -259,6 +270,7 @@ fn test_public_execute_after_threshold() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     client.sign_proposal(&s.alice, &id2);
@@ -278,12 +290,14 @@ fn test_get_proposals_by_status() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     let id2 = client.create_proposal(
         &s.bob,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
 
@@ -313,6 +327,7 @@ fn test_expire_proposal() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "short ttl proposal"),
         &Some(60u64),
     );
     s.env.ledger().with_mut(|l| {
@@ -336,7 +351,7 @@ fn test_transfer_funds() {
         asset: s.asset.clone(),
         memo: String::from_str(&s.env, "bounty"),
     });
-    let id = client.create_proposal(&s.alice, &ProposalType::TransferFunds, &payload, &None);
+    let id = client.create_proposal(&s.alice, &ProposalType::TransferFunds, &payload, &desc(&s.env, "test proposal"), &None);
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id);
 
@@ -353,6 +368,7 @@ fn test_has_signed() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
 
@@ -372,12 +388,14 @@ fn test_get_pending_proposals() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     let _id2 = client.create_proposal(
         &s.bob,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
 
@@ -399,6 +417,7 @@ fn test_get_stats() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     // execute id1 with 2 signatures
@@ -421,6 +440,7 @@ fn test_cancelled_at_is_set() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     client.cancel_proposal(&id, &s.alice);
@@ -439,6 +459,7 @@ fn test_get_proposals_by_member() {    let s = setup_board();
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     // bob creates proposal 2
@@ -446,6 +467,7 @@ fn test_get_proposals_by_member() {    let s = setup_board();
         &s.bob,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
     // alice signs proposal 2
@@ -472,6 +494,7 @@ fn test_admin_can_cancel_any_proposal() {
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
         &None,
     );
 
@@ -502,4 +525,115 @@ fn test_deposit() {
         .balance(&s.contract);
 
     assert_eq!(balance_after - balance_before, 500);
+}
+
+/// is_initialized returns true after setup and the board threshold is correct
+#[test]
+fn test_is_initialized_and_get_threshold() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    assert!(client.is_initialized());
+    assert_eq!(client.get_threshold(), 2);
+}
+
+/// has_proposal returns false for unknown IDs and true after creation
+#[test]
+fn test_has_proposal() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    assert!(!client.has_proposal(&99));
+
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
+    assert!(client.has_proposal(&id));
+}
+
+/// get_member_count returns board size and updates after AddMember
+#[test]
+fn test_get_member_count() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    assert_eq!(client.get_member_count(), 3);
+
+    let newcomer = Address::generate(&s.env);
+    let payload = ProposalPayload::AddMember(AddMemberPayload {
+        new_member: newcomer.clone(),
+    });
+    let id = client.create_proposal(&s.alice, &ProposalType::AddMember, &payload, &desc(&s.env, "test proposal"), &None);
+    client.sign_proposal(&s.alice, &id);
+    client.sign_proposal(&s.bob, &id);
+
+    assert_eq!(client.get_member_count(), 4);
+}
+
+/// get_admin returns the address that was passed to initialize
+#[test]
+fn test_get_admin() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+    assert_eq!(client.get_admin(), s.admin);
+}
+
+/// UpdateThreshold with a valid new value updates the board threshold
+#[test]
+fn test_update_threshold_success() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    let payload = ProposalPayload::UpdateThreshold(UpdateThresholdPayload { new_threshold: 3 });
+    let id = client.create_proposal(&s.alice, &ProposalType::UpdateThreshold, &payload, &desc(&s.env, "test proposal"), &None);
+    client.sign_proposal(&s.alice, &id);
+    client.sign_proposal(&s.bob, &id);
+
+    assert_eq!(client.get_threshold(), 3);
+}
+
+/// AddMember rejects duplicate member
+#[test]
+#[should_panic(expected = "member already exists")]
+fn test_add_duplicate_member_rejected() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    // alice is already a member — should panic at execution
+    let payload = ProposalPayload::AddMember(AddMemberPayload {
+        new_member: s.alice.clone(),
+    });
+    let id = client.create_proposal(&s.alice, &ProposalType::AddMember, &payload, &desc(&s.env, "test proposal"), &None);
+    client.sign_proposal(&s.alice, &id);
+    client.sign_proposal(&s.bob, &id);
+}
+
+/// Proposal proposal_count increments correctly
+#[test]
+fn test_proposal_count() {
+    let s = setup_board();
+    let client = QuorumForgeClient::new(&s.env, &s.contract);
+
+    assert_eq!(client.get_proposal_count(), 0);
+
+    client.create_proposal(
+        &s.alice,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
+    client.create_proposal(
+        &s.bob,
+        &ProposalType::ResolveIssue,
+        &resolve_payload(&s),
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
+
+    assert_eq!(client.get_proposal_count(), 2);
 }
