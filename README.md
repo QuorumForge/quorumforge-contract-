@@ -5,6 +5,7 @@
 QuorumForge is a [Soroban](https://soroban.stellar.org) smart contract that lets open-source projects run a self-governing maintainer board entirely on-chain. Board members propose changes, collect signatures, and the contract auto-executes once the required quorum is reached — no trusted coordinator, no off-chain multisig server.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Testnet_board-7c3aed?style=for-the-badge)](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V)
 
 ---
 
