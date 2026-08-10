@@ -16,6 +16,7 @@ QuorumForge is a [Soroban](https://soroban.stellar.org) smart contract that lets
 | **Network** | Testnet |
 | **Explorer** | [stellar.expert](https://stellar.expert/explorer/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) · [Lab](https://lab.stellar.org/r/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
 | **Demo board** | 2-of-3 initialized; proposal #1 created, co-signed, and **auto-executed** on-chain |
+| **Live UI** | [quorumforge-app.vercel.app](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
 
 Example txs:
 - Initialize: [91d0e9…](https://stellar.expert/explorer/testnet/tx/91d0e9ecf32bc6a1009889d55e8b79fcf8f9e04428a8dff5fa539f098a766908)
