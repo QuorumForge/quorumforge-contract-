@@ -149,6 +149,9 @@
                     }
                   ]
                 },
+                {
+                  "string": "test proposal"
+                },
                 "void"
               ]
             }
@@ -313,10 +316,24 @@
                   "map": [
                     {
                       "key": {
+                        "symbol": "cancelled_at"
+                      },
+                      "val": "void"
+                    },
+                    {
+                      "key": {
                         "symbol": "created_at"
                       },
                       "val": {
                         "u64": 0
+                      }
+                    },
+                    {
+                      "key": {
+                        "symbol": "description"
+                      },
+                      "val": {
+                        "string": "test proposal"
                       }
                     },
                     {

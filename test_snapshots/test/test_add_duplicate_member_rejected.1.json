@@ -99,50 +99,23 @@
                 {
                   "vec": [
                     {
-                      "symbol": "ResolveIssue"
+                      "symbol": "AddMember"
                     }
                   ]
                 },
                 {
                   "vec": [
                     {
-                      "symbol": "ResolveIssue"
+                      "symbol": "AddMember"
                     },
                     {
                       "map": [
                         {
                           "key": {
-                            "symbol": "amount"
+                            "symbol": "new_member"
                           },
                           "val": {
-                            "i128": {
-                              "hi": 0,
-                              "lo": 100
-                            }
-                          }
-                        },
-                        {
-                          "key": {
-                            "symbol": "asset"
-                          },
-                          "val": {
-                            "address": "CDS3FDGQ4JA2V3F26Y4BMWWJEC5TT26RJBN7KIQKUMVO2MAOCMDTSZ7A"
-                          }
-                        },
-                        {
-                          "key": {
-                            "symbol": "contributor"
-                          },
-                          "val": {
-                            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAK3IM"
-                          }
-                        },
-                        {
-                          "key": {
-                            "symbol": "issue_number"
-                          },
-                          "val": {
-                            "u64": 42
+                            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
                           }
                         }
                       ]
@@ -335,43 +308,16 @@
                       "val": {
                         "vec": [
                           {
-                            "symbol": "ResolveIssue"
+                            "symbol": "AddMember"
                           },
                           {
                             "map": [
                               {
                                 "key": {
-                                  "symbol": "amount"
+                                  "symbol": "new_member"
                                 },
                                 "val": {
-                                  "i128": {
-                                    "hi": 0,
-                                    "lo": 100
-                                  }
-                                }
-                              },
-                              {
-                                "key": {
-                                  "symbol": "asset"
-                                },
-                                "val": {
-                                  "address": "CDS3FDGQ4JA2V3F26Y4BMWWJEC5TT26RJBN7KIQKUMVO2MAOCMDTSZ7A"
-                                }
-                              },
-                              {
-                                "key": {
-                                  "symbol": "contributor"
-                                },
-                                "val": {
-                                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAK3IM"
-                                }
-                              },
-                              {
-                                "key": {
-                                  "symbol": "issue_number"
-                                },
-                                "val": {
-                                  "u64": 42
+                                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
                                 }
                               }
                             ]
@@ -394,7 +340,7 @@
                       "val": {
                         "vec": [
                           {
-                            "symbol": "ResolveIssue"
+                            "symbol": "AddMember"
                           }
                         ]
                       }
@@ -884,5 +830,78 @@
       ]
     ]
   },
-  "events": []
+  "events": [
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000001",
+        "type_": "contract",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "proposal"
+              },
+              {
+                "symbol": "signed"
+              }
+            ],
+            "data": {
+              "vec": [
+                {
+                  "u64": 1
+                },
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
+                },
+                {
+                  "u32": 2
+                },
+                {
+                  "u32": 2
+                }
+              ]
+            }
+          }
+        }
+      },
+      "failed_call": true
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000001",
+        "type_": "contract",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "proposal"
+              },
+              {
+                "symbol": "quorum"
+              }
+            ],
+            "data": {
+              "vec": [
+                {
+                  "u64": 1
+                },
+                {
+                  "u32": 2
+                },
+                {
+                  "u32": 2
+                },
+                {
+                  "u64": 0
+                }
+              ]
+            }
+          }
+        }
+      },
+      "failed_call": true
+    }
+  ]
 }

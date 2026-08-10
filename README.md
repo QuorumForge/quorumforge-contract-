@@ -4,8 +4,24 @@
 
 QuorumForge is a [Soroban](https://soroban.stellar.org) smart contract that lets open-source projects run a self-governing maintainer board entirely on-chain. Board members propose changes, collect signatures, and the contract auto-executes once the required quorum is reached — no trusted coordinator, no off-chain multisig server.
 
-[![CI](https://github.com/your-org/quorumforge-contract/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/quorumforge-contract/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+---
+
+## Live on Stellar Testnet
+
+| | |
+|---|---|
+| **Contract ID** | `CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V` |
+| **Network** | Testnet |
+| **Explorer** | [stellar.expert](https://stellar.expert/explorer/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) · [Lab](https://lab.stellar.org/r/testnet/contract/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) |
+| **Demo board** | 2-of-3 initialized; proposal #1 created, co-signed, and **auto-executed** on-chain |
+
+Example txs:
+- Initialize: [91d0e9…](https://stellar.expert/explorer/testnet/tx/91d0e9ecf32bc6a1009889d55e8b79fcf8f9e04428a8dff5fa539f098a766908)
+- Create proposal: [b59055…](https://stellar.expert/explorer/testnet/tx/b59055ca17faf8091fd4cc189a81ecf1cb79fd0ef0f4c2f23435f8fdf50d1f4d)
+- Sign #1: [6de3a8…](https://stellar.expert/explorer/testnet/tx/6de3a8b5e443847e948d121d79fd8b09096c4ae0058790acc82cfe2bc3d0de32)
+- Sign #2 → quorum + execute: [c9ba9a…](https://stellar.expert/explorer/testnet/tx/c9ba9af779457cbc274117d318deaba7ace532ab6e51e4497f0a96d58519b5fa)
 
 ---
 

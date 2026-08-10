@@ -2,27 +2,25 @@
 # deploy.sh — Deploy quorumforge-contract to Testnet or Mainnet
 # Usage:
 #   ./scripts/deploy.sh testnet <source-account>
-#   ./scripts/deploy.sh mainnet <source-account>
-#
-# Options:
-#   SAVE_ID=1   Write the deployed contract ID to .contract-id.<network>
+#   SAVE_ID=1 ./scripts/deploy.sh testnet <source-account>
 
 set -euo pipefail
 
 NETWORK="${1:-testnet}"
 SOURCE="${2:-default}"
 SAVE_ID="${SAVE_ID:-0}"
-WASM="target/wasm32-unknown-unknown/release/quorumforge_contract.wasm"
-OPTIMIZED="target/quorumforge_contract.optimized.wasm"
+WASM="target/wasm32v1-none/release/quorumforge_contract.wasm"
 
-echo "==> Building contract..."
-cargo build --target wasm32-unknown-unknown --release
+echo "==> Building contract (stellar contract build --optimize=false)..."
+stellar contract build --optimize=false
 
-echo "==> Optimizing wasm..."
-stellar contract optimize --wasm "$WASM" --wasm-out "$OPTIMIZED"
+if [[ ! -f "$WASM" ]]; then
+  echo "❌ Expected wasm at $WASM"
+  exit 1
+fi
 
-WASM_SIZE=$(du -k "$OPTIMIZED" | cut -f1)
-echo "    Optimized wasm size: ${WASM_SIZE}KB"
+WASM_SIZE=$(du -k "$WASM" | cut -f1)
+echo "    Wasm size: ${WASM_SIZE}KB"
 
 if [[ "$NETWORK" == "mainnet" ]]; then
   echo ""
@@ -34,9 +32,10 @@ fi
 
 echo "==> Deploying to $NETWORK..."
 CONTRACT_ID=$(stellar contract deploy \
-  --wasm "$OPTIMIZED" \
-  --source "$SOURCE" \
-  --network "$NETWORK")
+  --wasm "$WASM" \
+  --source-account "$SOURCE" \
+  --network "$NETWORK" \
+  --optimize=false)
 
 if [[ "$SAVE_ID" == "1" ]]; then
   echo "$CONTRACT_ID" > ".contract-id.${NETWORK}"
@@ -48,16 +47,5 @@ echo "✅ Deployed successfully!"
 echo "   Contract ID : $CONTRACT_ID"
 echo "   Network     : $NETWORK"
 echo ""
-echo "Next — initialize the contract:"
-echo ""
-echo "  stellar contract invoke \\"
-echo "    --id $CONTRACT_ID \\"
-echo "    --source $SOURCE \\"
-echo "    --network $NETWORK \\"
-echo "    -- initialize \\"
-echo "    --admin <ADMIN_ADDRESS> \\"
-echo "    --members '[\"<MEMBER_1>\",\"<MEMBER_2>\",\"<MEMBER_3>\"]' \\"
-echo "    --threshold 2"
-echo ""
-echo "Or use the Makefile shortcut:"
-echo "  make invoke-initialize CONTRACT_ID=$CONTRACT_ID ADMIN=<ADMIN> MEMBERS='[...]' THRESHOLD=2"
+echo "Next — initialize:"
+echo "  stellar contract invoke --id $CONTRACT_ID --source-account $SOURCE --network $NETWORK --send=yes -- initialize --admin <ADMIN> --members '[\"...\"]' --threshold 2"

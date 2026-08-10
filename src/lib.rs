@@ -7,12 +7,12 @@ mod types;
 #[cfg(test)]
 mod test;
 
-use soroban_sdk::{contract, contractimpl, token, Address, Env, Vec};
+use soroban_sdk::{contract, contractimpl, token, Address, Env, String, Vec};
 
 use crate::{
     storage::{
-        self, get_admin, get_board, get_count, get_proposal, has_board, increment_count, set_admin,
-        set_board, set_proposal,
+        get_admin, get_board, get_count, get_proposal, has_admin, has_board, has_proposal,
+        increment_count, set_admin, set_board, set_proposal,
     },
     types::{BoardConfig, Proposal, ProposalPayload, ProposalStatus, ProposalType, Stats},
 };
@@ -104,6 +104,7 @@ impl QuorumForge {
             created_at: ts,
             expires_at,
             executed_at: None,
+            cancelled_at: None,
         };
         set_proposal(&env, &proposal);
 
@@ -267,7 +268,7 @@ impl QuorumForge {
 
     /// Returns `true` if the board has been initialized and an admin is set.
     pub fn is_initialized(env: Env) -> bool {
-        storage::has_board(&env) && storage::has_admin(&env)
+        has_board(&env) && has_admin(&env)
     }
 
     /// Returns the current signing threshold without fetching the full board config.
@@ -277,7 +278,7 @@ impl QuorumForge {
 
     /// Returns `true` if a proposal with the given ID exists in storage.
     pub fn has_proposal(env: Env, proposal_id: u64) -> bool {
-        storage::has_proposal(&env, proposal_id)
+        has_proposal(&env, proposal_id)
     }
 
     /// Convenience shortcut — returns all proposals with `Pending` status.

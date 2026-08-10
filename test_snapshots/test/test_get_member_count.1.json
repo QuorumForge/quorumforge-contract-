@@ -1,6 +1,6 @@
 {
   "generators": {
-    "address": 7,
+    "address": 8,
     "nonce": 0
   },
   "auth": [
@@ -84,6 +84,7 @@
         }
       ]
     ],
+    [],
     [
       [
         "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M",
@@ -99,50 +100,23 @@
                 {
                   "vec": [
                     {
-                      "symbol": "ResolveIssue"
+                      "symbol": "AddMember"
                     }
                   ]
                 },
                 {
                   "vec": [
                     {
-                      "symbol": "ResolveIssue"
+                      "symbol": "AddMember"
                     },
                     {
                       "map": [
                         {
                           "key": {
-                            "symbol": "amount"
+                            "symbol": "new_member"
                           },
                           "val": {
-                            "i128": {
-                              "hi": 0,
-                              "lo": 100
-                            }
-                          }
-                        },
-                        {
-                          "key": {
-                            "symbol": "asset"
-                          },
-                          "val": {
-                            "address": "CDS3FDGQ4JA2V3F26Y4BMWWJEC5TT26RJBN7KIQKUMVO2MAOCMDTSZ7A"
-                          }
-                        },
-                        {
-                          "key": {
-                            "symbol": "contributor"
-                          },
-                          "val": {
-                            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAK3IM"
-                          }
-                        },
-                        {
-                          "key": {
-                            "symbol": "issue_number"
-                          },
-                          "val": {
-                            "u64": 42
+                            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARQG5"
                           }
                         }
                       ]
@@ -171,6 +145,28 @@
               "args": [
                 {
                   "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                },
+                {
+                  "u64": 1
+                }
+              ]
+            }
+          },
+          "sub_invocations": []
+        }
+      ]
+    ],
+    [
+      [
+        "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4",
+        {
+          "function": {
+            "contract_fn": {
+              "contract_address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
+              "function_name": "sign_proposal",
+              "args": [
+                {
+                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
                 },
                 {
                   "u64": 1
@@ -318,7 +314,9 @@
                       "key": {
                         "symbol": "executed_at"
                       },
-                      "val": "void"
+                      "val": {
+                        "u64": 0
+                      }
                     },
                     {
                       "key": {
@@ -335,43 +333,16 @@
                       "val": {
                         "vec": [
                           {
-                            "symbol": "ResolveIssue"
+                            "symbol": "AddMember"
                           },
                           {
                             "map": [
                               {
                                 "key": {
-                                  "symbol": "amount"
+                                  "symbol": "new_member"
                                 },
                                 "val": {
-                                  "i128": {
-                                    "hi": 0,
-                                    "lo": 100
-                                  }
-                                }
-                              },
-                              {
-                                "key": {
-                                  "symbol": "asset"
-                                },
-                                "val": {
-                                  "address": "CDS3FDGQ4JA2V3F26Y4BMWWJEC5TT26RJBN7KIQKUMVO2MAOCMDTSZ7A"
-                                }
-                              },
-                              {
-                                "key": {
-                                  "symbol": "contributor"
-                                },
-                                "val": {
-                                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAK3IM"
-                                }
-                              },
-                              {
-                                "key": {
-                                  "symbol": "issue_number"
-                                },
-                                "val": {
-                                  "u64": 42
+                                  "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARQG5"
                                 }
                               }
                             ]
@@ -394,7 +365,7 @@
                       "val": {
                         "vec": [
                           {
-                            "symbol": "ResolveIssue"
+                            "symbol": "AddMember"
                           }
                         ]
                       }
@@ -415,6 +386,9 @@
                         "vec": [
                           {
                             "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHK3M"
+                          },
+                          {
+                            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4"
                           }
                         ]
                       }
@@ -426,7 +400,7 @@
                       "val": {
                         "vec": [
                           {
-                            "symbol": "Pending"
+                            "symbol": "Executed"
                           }
                         ]
                       }
@@ -507,6 +481,9 @@
                                   },
                                   {
                                     "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAK3IM"
+                                  },
+                                  {
+                                    "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARQG5"
                                   }
                                 ]
                               }
@@ -632,6 +609,39 @@
                 "key": {
                   "ledger_key_nonce": {
                     "nonce": 4837995959683129791
+                  }
+                },
+                "durability": "temporary",
+                "val": "void"
+              }
+            },
+            "ext": "v0"
+          },
+          6311999
+        ]
+      ],
+      [
+        {
+          "contract_data": {
+            "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4",
+            "key": {
+              "ledger_key_nonce": {
+                "nonce": 4270020994084947596
+              }
+            },
+            "durability": "temporary"
+          }
+        },
+        [
+          {
+            "last_modified_ledger_seq": 0,
+            "data": {
+              "contract_data": {
+                "ext": "v0",
+                "contract": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAITA4",
+                "key": {
+                  "ledger_key_nonce": {
+                    "nonce": 4270020994084947596
                   }
                 },
                 "durability": "temporary",

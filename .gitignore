@@ -3,9 +3,6 @@ target/
 *.wasm
 *.optimized.wasm
 
-# Cargo lock (keep for binaries, optional for libs — uncomment to ignore)
-# Cargo.lock
-
 # IDE / editor
 .idea/
 .vscode/
@@ -14,12 +11,15 @@ target/
 *.swo
 .DS_Store
 
-# Environment / secrets
+# Environment / secrets — never commit real env files
 .env
-*.env.*
+.env.*
+!.env.example
 credentials.json
+*.pem
+*.key
 
-# Stellar CLI artifacts
+# Stellar CLI artifacts (local keys / config)
 .stellar/
 identity/
 

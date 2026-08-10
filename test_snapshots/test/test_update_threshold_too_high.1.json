@@ -122,6 +122,9 @@
                     }
                   ]
                 },
+                {
+                  "string": "test proposal"
+                },
                 "void"
               ]
             }
@@ -264,10 +267,24 @@
                   "map": [
                     {
                       "key": {
+                        "symbol": "cancelled_at"
+                      },
+                      "val": "void"
+                    },
+                    {
+                      "key": {
                         "symbol": "created_at"
                       },
                       "val": {
                         "u64": 0
+                      }
+                    },
+                    {
+                      "key": {
+                        "symbol": "description"
+                      },
+                      "val": {
+                        "string": "test proposal"
                       }
                     },
                     {
@@ -842,6 +859,42 @@
                 },
                 {
                   "u32": 2
+                }
+              ]
+            }
+          }
+        }
+      },
+      "failed_call": true
+    },
+    {
+      "event": {
+        "ext": "v0",
+        "contract_id": "0000000000000000000000000000000000000000000000000000000000000001",
+        "type_": "contract",
+        "body": {
+          "v0": {
+            "topics": [
+              {
+                "symbol": "proposal"
+              },
+              {
+                "symbol": "quorum"
+              }
+            ],
+            "data": {
+              "vec": [
+                {
+                  "u64": 1
+                },
+                {
+                  "u32": 2
+                },
+                {
+                  "u32": 2
+                },
+                {
+                  "u64": 0
                 }
               ]
             }
