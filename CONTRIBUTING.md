@@ -129,6 +129,7 @@ cargo test -- --test-threads=1  # sequential (useful for snapshot tests)
 - Changes to contract behavior must be reflected in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 - New proposal types must be documented in [docs/PROPOSAL_TYPES.md](docs/PROPOSAL_TYPES.md).
 - The README must be updated if the CLI interface changes.
+- Live Testnet demo: [QuorumForge board on Stellar Testnet](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V).
 
 ---
 
