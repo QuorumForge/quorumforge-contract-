@@ -23,9 +23,7 @@ pub fn set_admin(env: &Env, admin: &Address) {
 }
 
 pub fn has_proposal(env: &Env, id: u64) -> bool {
-    env.storage()
-        .persistent()
-        .has(&DataKey::Proposal(id))
+    env.storage().persistent().has(&DataKey::Proposal(id))
 }
 
 pub fn get_proposal(env: &Env, id: u64) -> Proposal {
@@ -63,9 +61,11 @@ pub fn has_admin(env: &Env) -> bool {
 /// Call this after reading a proposal to prevent it from being evicted.
 #[allow(dead_code)]
 pub fn extend_proposal_ttl(env: &Env, id: u64, ledgers_to_extend: u32) {
-    env.storage()
-        .persistent()
-        .extend_ttl(&DataKey::Proposal(id), ledgers_to_extend, ledgers_to_extend);
+    env.storage().persistent().extend_ttl(
+        &DataKey::Proposal(id),
+        ledgers_to_extend,
+        ledgers_to_extend,
+    );
 }
 
 /// Extends the TTL of the instance storage (board config, admin, count).

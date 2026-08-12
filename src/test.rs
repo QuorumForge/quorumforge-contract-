@@ -208,7 +208,13 @@ fn test_add_member() {
     let payload = ProposalPayload::AddMember(AddMemberPayload {
         new_member: newcomer.clone(),
     });
-    let id = client.create_proposal(&s.alice, &ProposalType::AddMember, &payload, &desc(&s.env, "test proposal"), &None);
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::AddMember,
+        &payload,
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id);
 
@@ -226,7 +232,13 @@ fn test_remove_member() {
     let payload = ProposalPayload::RemoveMember(RemoveMemberPayload {
         member: s.carol.clone(),
     });
-    let id = client.create_proposal(&s.alice, &ProposalType::RemoveMember, &payload, &desc(&s.env, "test proposal"), &None);
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::RemoveMember,
+        &payload,
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id);
 
@@ -243,7 +255,13 @@ fn test_update_threshold_too_high() {
     let client = QuorumForgeClient::new(&s.env, &s.contract);
 
     let payload = ProposalPayload::UpdateThreshold(UpdateThresholdPayload { new_threshold: 99 });
-    let id = client.create_proposal(&s.alice, &ProposalType::UpdateThreshold, &payload, &desc(&s.env, "test proposal"), &None);
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::UpdateThreshold,
+        &payload,
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id); // executes → panics
 }
@@ -351,7 +369,13 @@ fn test_transfer_funds() {
         asset: s.asset.clone(),
         memo: String::from_str(&s.env, "bounty"),
     });
-    let id = client.create_proposal(&s.alice, &ProposalType::TransferFunds, &payload, &desc(&s.env, "test proposal"), &None);
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::TransferFunds,
+        &payload,
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id);
 
@@ -451,7 +475,8 @@ fn test_cancelled_at_is_set() {
 
 /// get_proposals_by_member returns proposals created or signed by member
 #[test]
-fn test_get_proposals_by_member() {    let s = setup_board();
+fn test_get_proposals_by_member() {
+    let s = setup_board();
     let client = QuorumForgeClient::new(&s.env, &s.contract);
 
     // alice creates proposal 1
@@ -516,13 +541,11 @@ fn test_deposit() {
     let asset_client = StellarAssetClient::new(&s.env, &s.asset);
     asset_client.mint(&depositor, &1_000);
 
-    let balance_before = soroban_sdk::token::Client::new(&s.env, &s.asset)
-        .balance(&s.contract);
+    let balance_before = soroban_sdk::token::Client::new(&s.env, &s.asset).balance(&s.contract);
 
     client.deposit(&depositor, &500, &s.asset);
 
-    let balance_after = soroban_sdk::token::Client::new(&s.env, &s.asset)
-        .balance(&s.contract);
+    let balance_after = soroban_sdk::token::Client::new(&s.env, &s.asset).balance(&s.contract);
 
     assert_eq!(balance_after - balance_before, 500);
 }
@@ -567,7 +590,13 @@ fn test_get_member_count() {
     let payload = ProposalPayload::AddMember(AddMemberPayload {
         new_member: newcomer.clone(),
     });
-    let id = client.create_proposal(&s.alice, &ProposalType::AddMember, &payload, &desc(&s.env, "test proposal"), &None);
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::AddMember,
+        &payload,
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id);
 
@@ -589,7 +618,13 @@ fn test_update_threshold_success() {
     let client = QuorumForgeClient::new(&s.env, &s.contract);
 
     let payload = ProposalPayload::UpdateThreshold(UpdateThresholdPayload { new_threshold: 3 });
-    let id = client.create_proposal(&s.alice, &ProposalType::UpdateThreshold, &payload, &desc(&s.env, "test proposal"), &None);
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::UpdateThreshold,
+        &payload,
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id);
 
@@ -607,7 +642,13 @@ fn test_add_duplicate_member_rejected() {
     let payload = ProposalPayload::AddMember(AddMemberPayload {
         new_member: s.alice.clone(),
     });
-    let id = client.create_proposal(&s.alice, &ProposalType::AddMember, &payload, &desc(&s.env, "test proposal"), &None);
+    let id = client.create_proposal(
+        &s.alice,
+        &ProposalType::AddMember,
+        &payload,
+        &desc(&s.env, "test proposal"),
+        &None,
+    );
     client.sign_proposal(&s.alice, &id);
     client.sign_proposal(&s.bob, &id);
 }

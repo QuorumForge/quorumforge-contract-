@@ -107,7 +107,13 @@ pub fn member_removed(env: &Env, removed: &Address, members_count: u32, timestam
     );
 }
 
-pub fn withdrawal_requested(env: &Env, proposal_id: u64, recipient: &Address, amount: i128, timestamp: u64) {
+pub fn withdrawal_requested(
+    env: &Env,
+    proposal_id: u64,
+    recipient: &Address,
+    amount: i128,
+    timestamp: u64,
+) {
     env.events().publish(
         (symbol_short!("treasury"), symbol_short!("withdraw")),
         (proposal_id, recipient.clone(), amount, timestamp),
