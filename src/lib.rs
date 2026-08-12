@@ -14,11 +14,11 @@ use crate::{
         get_admin, get_board, get_count, get_proposal, has_admin, has_board, has_proposal,
         increment_count, set_admin, set_board, set_proposal,
     },
-    types::{BoardConfig, Proposal, ProposalPayload, ProposalStatus, ProposalType, Stats},
+    types::{
+        BoardConfig, Proposal, ProposalPayload, ProposalStatus, ProposalType, Stats, MAX_TTL_SECS,
+        MIN_TTL_SECS,
+    },
 };
-
-const MIN_TTL_SECS: u64 = 60 * 60; // 1 hour minimum
-const MAX_TTL_SECS: u64 = 30 * 24 * 60 * 60; // 30 days maximum
 
 fn is_member(members: &Vec<Address>, addr: &Address) -> bool {
     members.contains(addr)

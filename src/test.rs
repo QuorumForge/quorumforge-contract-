@@ -172,11 +172,11 @@ fn test_expired_cannot_sign() {
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
         &desc(&s.env, "short ttl proposal"),
-        &Some(60u64), // 60 second TTL
+        &Some(crate::types::MIN_TTL_SECS), // minimum allowed TTL (1 hour)
     );
     // advance ledger past TTL
     s.env.ledger().with_mut(|l| {
-        l.timestamp += 120;
+        l.timestamp += crate::types::MIN_TTL_SECS + 1;
     });
     client.sign_proposal(&s.bob, &id);
 }
@@ -328,10 +328,10 @@ fn test_expire_proposal() {
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),
         &desc(&s.env, "short ttl proposal"),
-        &Some(60u64),
+        &Some(crate::types::MIN_TTL_SECS),
     );
     s.env.ledger().with_mut(|l| {
-        l.timestamp += 120;
+        l.timestamp += crate::types::MIN_TTL_SECS + 1;
     });
     client.expire_proposal(&id);
     let p = client.get_proposal(&id);
@@ -455,7 +455,7 @@ fn test_get_proposals_by_member() {    let s = setup_board();
     let client = QuorumForgeClient::new(&s.env, &s.contract);
 
     // alice creates proposal 1
-    let id1 = client.create_proposal(
+    let _id1 = client.create_proposal(
         &s.alice,
         &ProposalType::ResolveIssue,
         &resolve_payload(&s),

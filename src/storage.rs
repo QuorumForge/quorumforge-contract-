@@ -61,6 +61,7 @@ pub fn has_admin(env: &Env) -> bool {
 
 /// Extends the TTL of a proposal's persistent storage entry.
 /// Call this after reading a proposal to prevent it from being evicted.
+#[allow(dead_code)]
 pub fn extend_proposal_ttl(env: &Env, id: u64, ledgers_to_extend: u32) {
     env.storage()
         .persistent()
@@ -68,6 +69,7 @@ pub fn extend_proposal_ttl(env: &Env, id: u64, ledgers_to_extend: u32) {
 }
 
 /// Extends the TTL of the instance storage (board config, admin, count).
+#[allow(dead_code)]
 pub fn extend_instance_ttl(env: &Env, ledgers_to_extend: u32) {
     env.storage()
         .instance()
