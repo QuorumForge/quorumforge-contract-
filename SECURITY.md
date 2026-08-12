@@ -17,7 +17,7 @@
 Please send a private report to:
 
 ```
-security@your-org.example
+https://github.com/QuorumForge/quorumforge-contract-/security/advisories/new
 ```
 
 Include:
