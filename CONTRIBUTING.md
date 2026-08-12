@@ -48,8 +48,8 @@ Live Testnet board:
 ### Clone and verify
 
 ```bash
-git clone https://github.com/your-org/quorumforge-contract
-cd quorumforge-contract
+git clone https://github.com/QuorumForge/quorumforge-contract-
+cd quorumforge-contract-
 make test    # should pass with zero failures
 make lint    # should produce zero warnings
 make fmt     # should produce no diff
