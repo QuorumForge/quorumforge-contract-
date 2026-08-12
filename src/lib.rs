@@ -39,11 +39,11 @@ impl QuorumForge {
         assert!(!has_board(&env), "already initialized");
         assert!(!members.is_empty(), "members cannot be empty");
         assert!(
-            (members.len() as u32) <= crate::types::MAX_MEMBERS,
+            members.len() <= crate::types::MAX_MEMBERS,
             "too many members"
         );
         assert!(
-            threshold as usize <= members.len() as usize && threshold > 0,
+            threshold <= members.len() && threshold > 0,
             "invalid threshold"
         );
 
@@ -336,7 +336,7 @@ impl QuorumForge {
                     "member already exists"
                 );
                 assert!(
-                    (board.members.len() as u32) < crate::types::MAX_MEMBERS,
+                    board.members.len() < crate::types::MAX_MEMBERS,
                     "board is at maximum capacity"
                 );
                 board.members.push_back(p.new_member.clone());
@@ -364,7 +364,7 @@ impl QuorumForge {
             ProposalPayload::UpdateThreshold(p) => {
                 let mut board = get_board(env);
                 assert!(
-                    p.new_threshold as usize <= board.members.len() as usize && p.new_threshold > 0,
+                    p.new_threshold <= board.members.len() && p.new_threshold > 0,
                     "invalid threshold"
                 );
                 let old_threshold = board.threshold;
