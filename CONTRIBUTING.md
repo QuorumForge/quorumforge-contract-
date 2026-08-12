@@ -25,6 +25,9 @@ This project follows the [Contributor Covenant](https://www.contributor-covenant
 
 ## Ways to Contribute
 
+Live Testnet board:
+[https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V)
+
 - **Bug reports** — Open a GitHub Issue with a minimal reproduction.
 - **Feature requests** — Open an Issue describing the use case before writing code.
 - **Pull requests** — Bug fixes, new proposal types, documentation improvements, test coverage.
