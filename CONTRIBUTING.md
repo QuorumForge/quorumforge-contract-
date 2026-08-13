@@ -64,20 +64,22 @@ make fmt     # should produce no diff
    git checkout -b fix/double-sign-edge-case
    ```
 
-2. **Make your changes.** Keep each PR focused on a single concern.
+2. **Review the live Testnet board before opening a PR.** Check the current governance flow and behavior at [QuorumForge board on Stellar Testnet](https://quorumforge-app.vercel.app/board/CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V) so the change you are about to propose matches the live system.
 
-3. **Add or update tests.** Every bug fix needs a regression test. Every new feature needs at least one happy-path and one failure-path test.
+3. **Make your changes.** Keep each PR focused on a single concern.
 
-4. **Run the full check suite locally:**
+4. **Add or update tests.** Every bug fix needs a regression test. Every new feature needs at least one happy-path and one failure-path test.
+
+5. **Run the full check suite locally:**
    ```bash
    make fmt lint test build
    ```
 
-5. **Open a PR** against `main`. Fill in the PR template. Link the relevant issue.
+6. **Open a PR** against `main`. Fill in the PR template. Link the relevant issue.
 
-6. **Address review feedback.** Push new commits; do not force-push after a review has started unless asked to.
+7. **Address review feedback.** Push new commits; do not force-push after a review has started unless asked to.
 
-7. PRs require at least **one approving review** from a maintainer before merging.
+8. PRs require at least **one approving review** from a maintainer before merging.
 
 ---
 
