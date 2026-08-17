@@ -165,12 +165,12 @@ Super-majority required. Maximally resistant to collusion.
 
 ```bash
 # 1. Clone and build
-git clone https://github.com/your-org/quorumforge-contract
-cd quorumforge-contract
+git clone https://github.com/QuorumForge/quorumforge-contract-
+cd quorumforge-contract-
 
 # 2. Deploy
 ./scripts/deploy.sh testnet mykey
-# → outputs CONTRACT_ID=C...
+# → outputs CONTRACT_ID=CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V (example)
 
 # 3. Initialize
 stellar contract invoke \
@@ -185,7 +185,7 @@ Or with Make:
 
 ```bash
 make deploy-testnet SOURCE_ACCOUNT=mykey
-make invoke-initialize CONTRACT_ID=C... ADMIN=G... \
+make invoke-initialize CONTRACT_ID=CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V ADMIN=G... \
      MEMBERS='["G1","G2","G3"]' THRESHOLD=2
 ```
 
@@ -204,7 +204,7 @@ The script requires you to type `yes` to confirm before deploying to mainnet.
 All examples use `stellar contract invoke`. Set these env vars for brevity:
 
 ```bash
-export CONTRACT_ID=C...
+export CONTRACT_ID=CANU3HVHBFRT2CSZ73ZVDYKYNZMRP6J65KGO4QOTVA45AKORFA46UQ3V
 export NETWORK=testnet
 export SOURCE=mykey
 ```

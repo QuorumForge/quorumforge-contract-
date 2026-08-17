@@ -5,7 +5,7 @@ edition = "2021"
 authors = ["QuorumForge Contributors"]
 description = "Trustless N-of-M multi-sig governance contract for open source maintainer boards"
 license = "MIT"
-repository = "https://github.com/your-org/quorumforge-contract"
+repository = "https://github.com/QuorumForge/quorumforge-contract-"
 keywords = ["soroban", "stellar", "multisig", "governance", "dao"]
 categories = ["cryptography::cryptocurrencies"]
 

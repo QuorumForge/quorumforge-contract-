@@ -42,7 +42,7 @@ Live Testnet board:
 | Tool | Version | Install |
 |---|---|---|
 | Rust | stable | `rustup update stable` |
-| wasm32 target | — | `rustup target add wasm32-unknown-unknown` |
+| wasm32 target | — | `rustup target add wasm32-unknown-unknown` and `rustup target add wasm32v1-none` |
 | stellar-cli | latest | `cargo install --locked stellar-cli --features opt` |
 
 ### Clone and verify
