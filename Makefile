@@ -19,7 +19,7 @@ build:
 	cargo build --target wasm32-unknown-unknown --release
 
 optimize: build
-	stellar contract optimize --wasm $(WASM_PATH) --wasm-out $(OPTIMIZED_WASM)
+	stellar contract build --optimize
 
 # ── Dev ───────────────────────────────────────────────────────────────────────
 

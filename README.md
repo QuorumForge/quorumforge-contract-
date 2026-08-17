@@ -155,9 +155,10 @@ Super-majority required. Maximally resistant to collusion.
   ```bash
   rustup target add wasm32-unknown-unknown
   ```
-- Stellar CLI:
+- Stellar CLI (prebuilt binary or Homebrew):
   ```bash
-  cargo install --locked stellar-cli
+  brew install stellar-cli
+  # or: curl -fsSL https://github.com/stellar/stellar-cli/raw/main/install.sh | sh
   ```
 - A funded Stellar account (testnet faucet: `stellar keys generate --global mykey --network testnet`)
 

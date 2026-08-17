@@ -14,13 +14,15 @@ jobs:
   check:
     name: fmt + clippy + test + wasm-build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rust stable + wasm32 target
+      - name: Install Rust stable + wasm32 targets
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-unknown-unknown
+          targets: wasm32-unknown-unknown, wasm32v1-none
           components: rustfmt, clippy
 
       - name: Cache cargo registry
@@ -42,21 +44,15 @@ jobs:
       - name: test
         run: cargo test
 
-      - name: build wasm
-        run: cargo build --target wasm32-unknown-unknown --release
+      - name: Install Stellar CLI
+        uses: stellar/stellar-cli@v27.1.0
 
-      - name: Install stellar-cli
-        run: cargo install --locked stellar-cli
+      - name: Build optimized wasm
+        run: stellar contract build --optimize
 
-      - name: optimize wasm
-        run: |
-          stellar contract optimize \
-            --wasm target/wasm32-unknown-unknown/release/quorumforge_contract.wasm \
-            --wasm-out target/quorumforge_contract.optimized.wasm
-
-      - name: Upload optimized wasm
+      - name: Upload wasm artifact
         uses: actions/upload-artifact@v4
         with:
           name: quorumforge-contract-wasm
-          path: target/quorumforge_contract.optimized.wasm
+          path: target/wasm32v1-none/release/quorumforge_contract.wasm
           retention-days: 30
