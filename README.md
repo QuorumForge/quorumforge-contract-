@@ -157,7 +157,7 @@ Super-majority required. Maximally resistant to collusion.
   ```
 - Stellar CLI:
   ```bash
-  cargo install --locked stellar-cli --features opt
+  cargo install --locked stellar-cli
   ```
 - A funded Stellar account (testnet faucet: `stellar keys generate --global mykey --network testnet`)
 
